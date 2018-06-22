@@ -1,5 +1,6 @@
 <html>
 <body>
+<a href="/appointments" th:href="@{/appointments}">View appointments</a>
 <form action="#" th:action="@{/}" th:object="${dentistVisitDTO}" method="post">
     <table>
         <tr>
@@ -8,8 +9,24 @@
             <td th:if="${#fields.hasErrors('dentistName')}" th:errors="*{dentistName}">Nime viga</td>
         </tr>
         <tr>
+            <td><p th:text="#{dentist.select}">dentist.select</p></td>
+            <td>
+            	<select th:id="dentistSelect" th:field="*{dentistName}">
+	            	<option th:if="${!dentists.isEmpty()}" th:text="''" value=""></option>
+    				<option th:each="dentist: ${dentists}" th:value="${dentist.getDentistName()}" th:text="${dentist.getDentistName()}"></option>    	
+    				<option th:if="${dentists.isEmpty()}" th:text="'Pole eelnevaid arste!'" value=""></option>
+    			</select>
+    		</td>
+    		<td th:if="${#fields.hasErrors('dentistName')}" th:errors="*{dentistName}">Nime viga</td>
+        </tr>
+        <tr>
             <td><p th:text="#{visit.date}">visit.date</p></td>
             <td><input type="text" th:field="*{visitTime}"/></td>
+            <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">Kuupäeva viga</td>
+        </tr>
+        <tr>
+            <td><p th:text="#{visit.select}">visit.select</p></td>
+            <td><input type="datetime-local"/></td>
             <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">Kuupäeva viga</td>
         </tr>
         <tr>

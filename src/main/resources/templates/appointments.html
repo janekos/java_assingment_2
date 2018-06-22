@@ -1,0 +1,17 @@
+<html>
+<body>
+<a href="/" th:href="@{/}">Back</a>
+<table>
+	<tr>
+	    <th>Id</th>
+	    <th>Doctors name</th>
+	    <th>Visit time</th>
+	</tr>
+	<tr th:each="visit: ${visits}">
+	    <td th:text="${visit.getId()}">id</td>
+	    <td th:text="${visit.getDentistName()}">name</td>
+	    <td th:text="${visit.getVisitTime()}">time</td>
+	</tr>
+</table>
+</body>
+</html>
