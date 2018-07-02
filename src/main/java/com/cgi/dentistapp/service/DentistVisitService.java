@@ -22,7 +22,17 @@ public class DentistVisitService {
         DentistVisitEntity visit = new DentistVisitEntity(dentistName, visitTime);
         dentistVisitDao.create(visit);
     }
-
+    
+    public void updateVisit(String dentistName, Date visitTime) {
+        DentistVisitEntity visit = new DentistVisitEntity(dentistName, visitTime);
+        dentistVisitDao.create(visit);
+    }
+    
+    public void deleteVisit(int id) {
+        DentistVisitEntity visit = new DentistVisitEntity(dentistName, visitTime);
+        dentistVisitDao.create(visit);
+    }
+    
     public List<DentistVisitEntity> listVisits () {
         return dentistVisitDao.getAllVisits();
     }

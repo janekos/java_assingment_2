@@ -5,28 +5,22 @@
     <table>
         <tr>
             <td><p th:text="#{dentist.name}">dentist.name</p></td>
-            <td><input type="text" th:field="*{dentistName}"/></td>
+            <td><input id="dentistName" type="text" th:field="*{dentistName}"/></td>
             <td th:if="${#fields.hasErrors('dentistName')}" th:errors="*{dentistName}">Nime viga</td>
         </tr>
         <tr>
             <td><p th:text="#{dentist.select}">dentist.select</p></td>
             <td>
-            	<select th:id="dentistSelect" th:field="*{dentistName}">
-	            	<option th:if="${!dentists.isEmpty()}" th:text="''" value=""></option>
-    				<option th:each="dentist: ${dentists}" th:value="${dentist.getDentistName()}" th:text="${dentist.getDentistName()}"></option>    	
-    				<option th:if="${dentists.isEmpty()}" th:text="'Pole eelnevaid arste!'" value=""></option>
+            	<select id="dentistSelect" th:id="dentistSelect">   	
+    				<option th:if="${dentists.isEmpty()}" th:text="#{dentist.none}" value=""></option>
+    				<option th:if="${!dentists.isEmpty()}" th:text="''" value=""></option>
     			</select>
     		</td>
-    		<td th:if="${#fields.hasErrors('dentistName')}" th:errors="*{dentistName}">Nime viga</td>
         </tr>
         <tr>
             <td><p th:text="#{visit.date}">visit.date</p></td>
-            <td><input type="text" th:field="*{visitTime}"/></td>
-            <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">Kuupäeva viga</td>
-        </tr>
-        <tr>
-            <td><p th:text="#{visit.select}">visit.select</p></td>
-            <td><input type="datetime-local"/></td>
+            <td><input type="text" th:field="*{visitTime}" value="10.10.1000"/></td>
+            <td><input type="date" style="width: 30px;"/></td>
             <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">Kuupäeva viga</td>
         </tr>
         <tr>
@@ -36,5 +30,29 @@
         </tr>
     </table>
 </form>
+<script th:inline="javascript">
+/*<![CDATA[*/    
+    var dentists = /*[[${dentists}]]*/ [];
+    if(dentists.length != 0){
+    	
+    	var dentistSelect = document.getElementById("dentistSelect");
+    	var dentistName = document.getElementById("dentistName");
+    	
+    	for(var dentist of dentists){
+    		dentistSelect.add(createNewDentistOption(dentist.dentistName));
+    	}
+    	
+    	dentistSelect.addEventListener("change", function(e){
+    		dentistName.value = e.target.options[e.target.selectedIndex].text;
+    	});    	
+    }
+    
+    function createNewDentistOption(name){
+    	var option = document.createElement("option");
+    	option.text = name;
+    	return option;
+    }
+/*]]>*/
+</script>
 </body>
 </html>

@@ -3,15 +3,81 @@
 <a href="/" th:href="@{/}">Back</a>
 <table>
 	<tr>
+	    <td>Search doctors: </td>
+	    <td><input id="search" type="text"/></td>
+	</tr>
+	<tr>
+	    <td>Search doctors: </td>
+	    <td>
+	    	<select id="searchBy">
+	    		<option value="0">ID</option>
+	    		<option value="1">Doctors name</option>
+	    		<option value="2">Time</option>
+	    	</select>
+	    </td>
+	</tr>
+</table>
+<table id="visitsTable" border="1">
+	<tr>
 	    <th>Id</th>
 	    <th>Doctors name</th>
 	    <th>Visit time</th>
+	    <th>Edit</th>
+	    <th>Delete</th>
 	</tr>
 	<tr th:each="visit: ${visits}">
 	    <td th:text="${visit.getId()}">id</td>
 	    <td th:text="${visit.getDentistName()}">name</td>
 	    <td th:text="${visit.getVisitTime()}">time</td>
+	    <td><button th:onclick="'editVisit(' + ${visit.getId()} + ');'">Edit</button></td>
+	    <td><button th:onclick="'deleteVisit(' + ${visit.getId()} + ');'">Delete</button></td>
 	</tr>
 </table>
+<script th:inline="javascript">
+/*<![CDATA[*/    
+    
+	var visits = /*[[${visits}]]*/ [];
+    if(visits.length != 0){
+    	var visitsTable = document.querySelector("#visitsTable");
+    	var rows = visitsTable.getElementsByTagName("tr");
+    	var searchBy = document.querySelector("#searchBy");
+    	
+    	document.querySelector("#search").addEventListener("input", function(e){
+    		var key = searchBy.options[searchBy.selectedIndex].value;
+    		for (i = 0; i < rows.length; i++) {
+    		    var item = rows[i].getElementsByTagName("td")[key];
+    		    if (item) {
+    		    	if (item.innerHTML.includes(e.target.value)) {
+    		    		rows[i].style.display = "";
+    		    	} else {
+    		    		rows[i].style.display = "none";
+    		    	}
+    		  	} 
+    		}
+    	});
+    	
+    	function editVisit(id){
+    		var row = rows[id];
+    		var name = row.children[1].innerHTML;
+    		var time = row.children[2].innerHTML;
+    		row.children[1].innerHTML = "<input id='editName' type='text' />";
+    		row.children[2].innerHTML = "<input id='edittime' type='datetime-local' />";
+    		row.children[3].children[0].innerHTML = "Confirm";
+    		row.children[3].children[0].onclick = function(){
+    			var newName = row.children[1].children[0].value;
+    			var newTime = row.children[2].children[0].value;
+    			console.log(newName + " " + newTime);	
+    		}
+        }
+        
+    	function deleteVisit(id){
+        	console.log(rows[id]);
+        }
+    	
+    }   
+    
+    
+/*]]>*/
+</script>
 </body>
 </html>

@@ -50,5 +50,11 @@ public class DentistAppController extends WebMvcConfigurerAdapter {
     	md.addAttribute("visits", dentistVisitService.listVisits());
         return "appointments";
     }
+    
+    @PostMapping("/appointments")
+    public String updateAppointmentsTable(DentistVisitDTO dentistVisitDTO, Model md) {
+    	dentistVisitService.addVisit(dentistVisitDTO.getDentistName(), dentistVisitDTO.getVisitTime());
+        return "appointments";
+    }
 
 }
