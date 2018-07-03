@@ -1,8 +1,0 @@
-doc
-
-###### stage 1
-Setting the project up took me 5 minutes. Done that before. Updating the UI didn't go nowhere near as smoothly since I've never before used Spring nor Thymeleaf. I looked through the code structure and got the general gist of how Spring works. Also had to look up what DAO and DTO is. This took me around 40 minutes. Working with Thymeleaf took much longer since I haven't used an template engine such as this one before and it appeared to be very rigid and unforgiving. This took me nearly 4 hours. Also the assignment was very unclear and confusing. The form originally had dentist name and visit time inputs and I had to add multiple selection input of doctor names and another time selecting input and validation. At each step it felt like being restricted by something. Most of the time the restriction occured due to thymeleaf itself, since either the expressions weren't working or some syntax errors were present, but often the source code posed some restrictions. For example validation. I didn't know how to bypass it if I had 4 items with 2 same field names. That ment changing model to accomodate addition of new field names and so on.
-###### stage 2
-Took me 2 minutes. Spring part was easy and I was more accomodated to using thymeleaf.
-###### stage 3
-###### stage 4

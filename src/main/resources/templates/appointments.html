@@ -57,22 +57,37 @@
     	});
     	
     	function editVisit(id){
-    		var row = rows[id];
+    		var row;
+    		
+    		for(var r of rows){
+    			if(r.children[0].innerHTML == String(id)){
+    				row = r;
+    			}
+    		}
+    		
     		var name = row.children[1].innerHTML;
     		var time = row.children[2].innerHTML;
-    		row.children[1].innerHTML = "<input id='editName' type='text' />";
-    		row.children[2].innerHTML = "<input id='edittime' type='datetime-local' />";
-    		row.children[3].children[0].innerHTML = "Confirm";
+    		row.children[1].innerHTML = "<input id='editName' type='text' value='"+name+"' />";
+    		row.children[2].innerHTML = "<input id='edittime' type='datetime-local' value='"+time+"' th:field='*{visitTime}' />";
+    		row.children[3].innerHTML = "<button>Confirm</button><button>Cancel</button>";
     		row.children[3].children[0].onclick = function(){
-    			var newName = row.children[1].children[0].value;
-    			var newTime = row.children[2].children[0].value;
-    			console.log(newName + " " + newTime);	
+    			ajax("/appointments/edit?id="+ id +"&name="+ row.children[1].children[0].value +"&time="+ row.children[2].children[0].value);	
     		}
+    		row.children[3].children[1].onclick = function(){ window.location.reload(); }
         }
         
     	function deleteVisit(id){
-        	console.log(rows[id]);
+    		ajax("/appointments/delete?id=" + id);
         }
+    	
+    	function ajax(url){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) { window.location.reload(); }
+			};
+			xhttp.open("POST", url, true);
+			xhttp.send();
+    	}
     	
     }   
     

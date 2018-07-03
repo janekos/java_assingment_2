@@ -19,9 +19,9 @@
         </tr>
         <tr>
             <td><p th:text="#{visit.date}">visit.date</p></td>
-            <td><input type="text" th:field="*{visitTime}" value="10.10.1000"/></td>
-            <td><input type="date" style="width: 30px;"/></td>
+            <td><input id="date" type="datetime-local" th:field="*{visitTime}"/></td>
             <td th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">Kuupäeva viga</td>
+            <td th:if="${#fields.hasErrors('global')}" th:errors="*{global}">Kuupäeva viga</td>
         </tr>
         <tr>
             <td>
@@ -31,15 +31,20 @@
     </table>
 </form>
 <script th:inline="javascript">
-/*<![CDATA[*/    
+/*<![CDATA[*/   
+	document.getElementById('date').defaultValue = new Date().toISOString().slice(0, -8);
+	
     var dentists = /*[[${dentists}]]*/ [];
     if(dentists.length != 0){
     	
     	var dentistSelect = document.getElementById("dentistSelect");
     	var dentistName = document.getElementById("dentistName");
-    	
+    	var names = [];
     	for(var dentist of dentists){
-    		dentistSelect.add(createNewDentistOption(dentist.dentistName));
+    		if(!names.includes(dentist.dentistName)){
+    			names.push(dentist.dentistName);
+    			dentistSelect.add(createNewDentistOption(dentist.dentistName));
+    		}
     	}
     	
     	dentistSelect.addEventListener("change", function(e){

@@ -1,6 +1,6 @@
 package com.cgi.dentistapp.dao.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,12 +21,12 @@ public class DentistVisitEntity {
     private String dentistName;
     
     @Column(name = "visit_time")
-    private Date visitTime;
+    private LocalDateTime visitTime;
 
     public DentistVisitEntity() {
     }
 
-    public DentistVisitEntity(String dentistName, Date visitTime) {
+    public DentistVisitEntity(String dentistName, LocalDateTime visitTime) {
     	this.setDentistName(dentistName);
         this.setVisitTime(visitTime);
     }
@@ -48,11 +48,11 @@ public class DentistVisitEntity {
     }
 
     
-    public Date getVisitTime() {
+    public LocalDateTime getVisitTime() {
         return visitTime;
     }
 
-    public void setVisitTime(Date visitTime) {
+    public void setVisitTime(LocalDateTime visitTime) {
         this.visitTime = visitTime;
     }
 
